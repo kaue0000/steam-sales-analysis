@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
+from sklearn.model_selection import train_test_split
 
 data = pd.read_csv('./vgsales.csv')
 # Visualização das primeiras linhas do dataset
@@ -53,3 +54,8 @@ preprocessor = ColumnTransformer(
         ('num', StandardScaler(), colunas_numericas)
     ]
 )
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+X_train_proc = preprocessor.fit_transform(X_train)   # aprende só no treino
+X_test_proc = preprocessor.transform(X_test)          # só aplica no teste
