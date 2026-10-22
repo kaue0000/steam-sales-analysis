@@ -40,10 +40,10 @@ y = data[alvos]
 X = data.drop(columns=colunas_vendas + alvos)
 
 # Selecionar colunas categóricas 
-colunas_categoricas = data.select_dtypes(include=['object']).columns.tolist()
+colunas_categoricas = X.select_dtypes(include=['object']).columns.tolist()
 
 # Selecionar colunas numéricas
-colunas_numericas = data.select_dtypes(include=['int64', 'float64']).columns.tolist()
+colunas_numericas = X.select_dtypes(include=['int64', 'float64']).columns.tolist()
 
 # Pré-processamento das colunas categóricas e das colunas numéricas
 preprocessor = ColumnTransformer(
