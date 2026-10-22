@@ -19,15 +19,21 @@ print(data.shape)
 
 
 # Apagar colunas desnecessárias para a análise
-data.drop(['Rank', 'Name', 'Year'], axis=1, inplace=True)
+data.drop(['Rank', 'Name', 'Year', 'Other_Sales', 'Global_Sales'], axis=1, inplace=True)
 
 # Descobrir quais colunas possuem valores nulos
 
 # Com isso, descobrimos que a coluna 'Publisher' possui 58 valores nulos. O restante, possuem 0 valores nulos
 # Consideramos que os valores 0 nas vendas tem um significado para a análise, portanto não iremos apagar nem substituir esses valores
 
-# Coluna da variável alvo - Teste
-y = data[["JP_Sales", "US_Sales", "EU_Sales"]]
+# Junção da tabela de vendas da América do Norte e Europa, para criar uma nova variável alvo (OCIDENTE)
+data["West_Sales"] = data["NA_Sales"] + data["EU_Sales"]
+
+# Mudança na nomenclatura da variável alvo para vendas do Japão, para criar uma nova variável alvo (ORIENTE)
+data["East_Sales"] = data["JP_Sales"]
+
+# Coluna da variável alvo
+y = data[["West_Sales", "East_Sales"]]
 X = data.drop(columns=[y])
 
 # Selecionar colunas categóricas 
