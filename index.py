@@ -32,9 +32,12 @@ data["West_Sales"] = data["NA_Sales"] + data["EU_Sales"]
 # Mudança na nomenclatura da variável alvo para vendas do Japão, para criar uma nova variável alvo (ORIENTE)
 data["East_Sales"] = data["JP_Sales"]
 
+alvos = ["West_Sales", "East_Sales"]
+colunas_vendas = ["NA_Sales", "EU_Sales", "JP_Sales"]
+
 # Coluna da variável alvo
-y = data[["West_Sales", "East_Sales"]]
-X = data.drop(columns=[y])
+y = data[alvos]
+X = data.drop(columns=colunas_vendas + alvos)
 
 # Selecionar colunas categóricas 
 colunas_categoricas = data.select_dtypes(include=['object']).columns.tolist()
