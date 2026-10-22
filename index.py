@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.impute import SimpleImputer
 
 data = pd.read_csv('./vgsales.csv')
 # Visualização das primeiras linhas do dataset
@@ -16,7 +17,6 @@ print(data.tail())
 print("-"*20 + "Formato do dataset" + "-"*20)
 print(data.shape)
 # Com a execução desse método temos a certeza de que o dataset se encaixa nos requisitos, que seria ter 1000 instâncias.
-
 
 # Apagar colunas desnecessárias para a análise
 data.drop(['Rank', 'Name', 'Year', 'Other_Sales', 'Global_Sales'], axis=1, inplace=True)
@@ -49,6 +49,7 @@ colunas_numericas = X.select_dtypes(include=['int64', 'float64']).columns.tolist
 preprocessor = ColumnTransformer(
     transformers=[
         ('cat', OneHotEncoder(handle_unknown='ignore'), colunas_categoricas),
+        ('imputer', SimpleImputer(strategy='constant', fill_value='Unknown')),
         ('num', StandardScaler(), colunas_numericas)
     ]
 )
